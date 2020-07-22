@@ -1,0 +1,4 @@
+primerdesign_b025.PrimerOutcome
+primerdesign_b025.a
+primerdesign_b025.primerType
+primerdesign_b025.PrimerType
