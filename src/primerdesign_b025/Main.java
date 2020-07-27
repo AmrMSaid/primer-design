@@ -30,13 +30,13 @@ public class Main extends javax.swing.JFrame {
         minTmTxt.setText(String.valueOf(PrimerSetting.minTemperature));
         optTmTxt.setText(String.valueOf(PrimerSetting.OPTIMAL_TEMPERATURE));
         maxTmTxt.setText(String.valueOf(PrimerSetting.maxTemperature));
-        minCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.minCG)));
-        optCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.optimalCG)));
-        maxCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.maxCG)));
-        
+        minCGTxt.setText(String.valueOf((PrimerSetting.minCG)));
+        optCGTxt.setText(String.valueOf((PrimerSetting.optimalCG)));
+        maxCGTxt.setText(String.valueOf((PrimerSetting.maxCG)));
+
         optSizeTxt.setEditable(false);
         optTmTxt.setEditable(false);
-        
+
         optimalRadio.setSelected(true);
     }
 
@@ -411,22 +411,25 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void generatePrimersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePrimersBtnActionPerformed
-        PrimerSetting.minSize = Integer.parseInt(minSizeTxt.getText()) / 100;
-        PrimerSetting.maxSize = Integer.parseInt(maxSizeTxt.getText()) / 100;
-        PrimerSetting.minTemperature = Integer.parseInt(minTmTxt.getText()) / 100;
-        PrimerSetting.maxTemperature = Integer.parseInt(maxTmTxt.getText()) / 100;
-        PrimerSetting.minCG = Double.parseDouble(minCGTxt.getText()) / 100;
-        PrimerSetting.optimalCG = Double.parseDouble(optCGTxt.getText()) / 100;
-        PrimerSetting.maxCG = Double.parseDouble(maxCGTxt.getText()) / 100;
+        PrimerSetting.minSize = Integer.parseInt(minSizeTxt.getText());
+        PrimerSetting.maxSize = Integer.parseInt(maxSizeTxt.getText());
+        PrimerSetting.minTemperature = Integer.parseInt(minTmTxt.getText());
+        PrimerSetting.maxTemperature = Integer.parseInt(maxTmTxt.getText());
+        PrimerSetting.minCG = Double.parseDouble(minCGTxt.getText());
+        PrimerSetting.optimalCG = Double.parseDouble(optCGTxt.getText());
+        PrimerSetting.maxCG = Double.parseDouble(maxCGTxt.getText());
 
         dna.setStartIndex(Integer.parseInt(startIndexTxt.getText()));
         dna.setEndIndex(Integer.parseInt(endIndexTxt.getText()));
-        
+
+        int minSize = PrimerSetting.minSize;
+        int maxSize = PrimerSetting.maxSize;
+
         double CGcount;
         int count = 0;
-//////////////////////////////////////////////////////////
-        for (int i = 0; i < dna.getStartIndex() - PrimerSetting.minSize; i++) {
-            for (int j = i + PrimerSetting.minSize - 1; j <= i + PrimerSetting.maxSize; j++) {
+
+        for (int i = 0; i < dna.getStartIndex() - minSize; i++) {
+            for (int j = i + minSize - 1; j <= i + maxSize; j++) {
                 if (j > dna.getStartIndex()) {
                     break;
                 }
@@ -442,14 +445,16 @@ public class Main extends javax.swing.JFrame {
                 double cgContent = CGcount / primerLength;
                 double tm = (4 * (gCount + cCount) + 2 * (aCount + tCount));
 
-                if (cgContent >= 0.2 && cgContent <= 0.6 && tm >= 57 && tm <= 63) {
+                if (cgContent >= (PrimerSetting.minCG / 100) && cgContent <= (PrimerSetting.maxCG / 100)
+                        && tm >= PrimerSetting.minTemperature && tm <= PrimerSetting.maxTemperature) {
                     PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.FORWARD);
+//                    System.out.println("size:" + primerLength);
                     forwardPrimers.add(primer);
                 }
             }
         }
-        for (int i = dna.getEndIndex(); i < DNAOutputTxt.getText().length() - PrimerSetting.minSize; i++) {
-            for (int j = i + PrimerSetting.minSize; j < i + PrimerSetting.maxSize + 1; j++) {
+        for (int i = dna.getEndIndex(); i < DNAOutputTxt.getText().length() - minSize; i++) {
+            for (int j = i + minSize; j < i + maxSize + 1; j++) {
                 if (j > DNAOutputTxt.getText().length()) {
                     break;
                 }
@@ -464,28 +469,27 @@ public class Main extends javax.swing.JFrame {
                 CGcount = cCount + gCount;
                 double cgContent = CGcount / primerLength;
                 double tm = (4 * (gCount + cCount) + 2 * (aCount + tCount));
-
-                if (cgContent >= 0.2 && cgContent <= 0.6 && tm >= 57 && tm <= 63) {
+                
+                if (cgContent >= (PrimerSetting.minCG / 100) && cgContent <= (PrimerSetting.maxCG / 100)
+                        && tm >= PrimerSetting.minTemperature && tm <= PrimerSetting.maxTemperature) {
                     PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.REVERSE);
+//                    System.out.println("size:" + primerLength);
                     reversePrimers.add(primer);
                 }
             }
         }
         if (optimalRadio.isSelected()) {
-            PrimerOutcome.sortOptimal(forwardPrimers);
-            PrimerOutcome.sortOptimal(reversePrimers);
-        }
-        else if (sizeRadio.isSelected()) {
-            PrimerOutcome.sortLength(forwardPrimers);
-            PrimerOutcome.sortLength(reversePrimers);
-        }
-        else if (tempRadio.isSelected()) {
-            PrimerOutcome.sortTm(forwardPrimers);
-            PrimerOutcome.sortTm(reversePrimers);
-        }
-        else if (cgRadio.isSelected()) {
-            PrimerOutcome.sortCG(forwardPrimers);
-            PrimerOutcome.sortCG(reversePrimers);
+            PrimerData.sortOptimal(forwardPrimers);
+            PrimerData.sortOptimal(reversePrimers);
+        } else if (sizeRadio.isSelected()) {
+            PrimerData.sortLength(forwardPrimers);
+            PrimerData.sortLength(reversePrimers);
+        } else if (tempRadio.isSelected()) {
+            PrimerData.sortTm(forwardPrimers);
+            PrimerData.sortTm(reversePrimers);
+        } else if (cgRadio.isSelected()) {
+            PrimerData.sortCG(forwardPrimers);
+            PrimerData.sortCG(reversePrimers);
         }
         JTextArea textArea = new JTextArea();
 

@@ -3,14 +3,14 @@ package primerdesign_b025;
 public class PrimerSetting {
 
     public static int minSize = 18;
-    public final static int OPTIMAL_SIZE = 20;
+    public final static int OPTIMAL_SIZE = 20;  
     public static int maxSize = 27;
     public static int minTemperature = 57;
     public final static int OPTIMAL_TEMPERATURE = 60;
     public static int maxTemperature = 63;
-    public static double minCG = 0.2;
-    public static double optimalCG = 0.4;
-    public static double maxCG = 0.6;
+    public static double minCG = 20;
+    public static double optimalCG = 50;
+    public static double maxCG = 60;
 
     public PrimerSetting() {
     }
