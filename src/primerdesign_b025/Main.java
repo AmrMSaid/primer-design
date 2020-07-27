@@ -1,15 +1,9 @@
 package primerdesign_b025;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.ArrayList;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 /*
@@ -28,15 +22,19 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
 
+        DNAInputTxt.setText("ATTACCTTTTTTAGGATCAGCCCTAACCCCTTCTTTCTAGTCCCCTTTTTCCTTTTTATTCAGGCTATCCCCTTTAAAATTTTCTGACCTCTTCTTTTATAATTTAAAATTCTAGTTCTAACAAAACCCCCTCCTTAATCCTTTTTTTAAATTTTTTTTTTCCTAATTTATTGATTTAGTGTTGTTTTTTTTTTTTTCCATGTTTCAATCTTTCCTCTGATCCTATTTTATAGCATGCACAAAACAAAAATTTAAAATCATCTTTTTCTTTTTTCCTTCCCCTTAGTTAGTGTGTCTGTATTTAAGAGAGATGACGCTCTCTCTATCAACCCTCCTCCCCCACTCTCTATCACCCCACCTATTACAGAAGTGTCGCCGTAAATATTTACTTCTAGTTTCTTGTGTTTAATAATTTATAAGATGGACCAAGTATTTAGGATTGGTTTACTGATGGTGTTATTTCATGGCTGATTATTTCAGTGAAGGAGTAGTGATGT");
+
         minSizeTxt.setText(String.valueOf(PrimerSetting.minSize));
         optSizeTxt.setText(String.valueOf(PrimerSetting.OPTIMAL_SIZE));
         maxSizeTxt.setText(String.valueOf(PrimerSetting.maxSize));
         minTmTxt.setText(String.valueOf(PrimerSetting.minTemperature));
         optTmTxt.setText(String.valueOf(PrimerSetting.OPTIMAL_TEMPERATURE));
         maxTmTxt.setText(String.valueOf(PrimerSetting.maxTemperature));
-        minCGTxt.setText(String.valueOf(PrimerSetting.minCG));
-        optCGTxt.setText(String.valueOf(PrimerSetting.optimalCG));
-        maxCGTxt.setText(String.valueOf(PrimerSetting.maxCG));
+        minCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.minCG)));
+        optCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.optimalCG)));
+        maxCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.maxCG)));
+        
+        optimalRadio.setSelected(true);
 
 //        JTabbedPane optimalTab = new JTabbedPane();
 //        
@@ -55,6 +53,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -78,14 +77,17 @@ public class Main extends javax.swing.JFrame {
         maxSizeTxt = new javax.swing.JTextField();
         optSizeTxt = new javax.swing.JTextField();
         enterBtn = new javax.swing.JButton();
-        generatePrimersBtn = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         startIndexTxt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         endIndexTxt = new javax.swing.JTextField();
-        scrollPane = new javax.swing.JScrollPane();
-        panel = new javax.swing.JPanel();
-        resultLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        optimalRadio = new javax.swing.JRadioButton();
+        sizeRadio = new javax.swing.JRadioButton();
+        tempRadio = new javax.swing.JRadioButton();
+        cgRadio = new javax.swing.JRadioButton();
+        jLabel12 = new javax.swing.JLabel();
+        generatePrimersBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -177,13 +179,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        generatePrimersBtn.setText("Generate Primers");
-        generatePrimersBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generatePrimersBtnActionPerformed(evt);
-            }
-        });
-
         jLabel10.setText("Start Index");
 
         startIndexTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -194,26 +189,64 @@ public class Main extends javax.swing.JFrame {
 
         jLabel11.setText("End Index");
 
-        resultLabel.setText("jLabel12");
+        buttonGroup1.add(optimalRadio);
+        optimalRadio.setText("Optimality");
 
-        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(resultLabel)
-                .addContainerGap(407, Short.MAX_VALUE))
-        );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(resultLabel)
-                .addContainerGap(333, Short.MAX_VALUE))
-        );
+        buttonGroup1.add(sizeRadio);
+        sizeRadio.setText("Primer size");
+        sizeRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sizeRadioActionPerformed(evt);
+            }
+        });
 
-        scrollPane.setViewportView(panel);
+        buttonGroup1.add(tempRadio);
+        tempRadio.setText("Temperature");
+
+        buttonGroup1.add(cgRadio);
+        cgRadio.setText("CG content");
+
+        jLabel12.setText("Sort By:");
+
+        generatePrimersBtn.setText("Generate Primers");
+        generatePrimersBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatePrimersBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(optimalRadio)
+                    .addComponent(sizeRadio)
+                    .addComponent(tempRadio)
+                    .addComponent(cgRadio)
+                    .addComponent(generatePrimersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel12)
+                .addGap(28, 28, 28)
+                .addComponent(optimalRadio)
+                .addGap(18, 18, 18)
+                .addComponent(sizeRadio)
+                .addGap(18, 18, 18)
+                .addComponent(tempRadio)
+                .addGap(18, 18, 18)
+                .addComponent(cgRadio)
+                .addGap(27, 27, 27)
+                .addComponent(generatePrimersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,17 +254,11 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(generatePrimersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
@@ -281,9 +308,12 @@ public class Main extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(endIndexTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)
-                        .addComponent(scrollPane)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGap(68, 68, 68)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(enterBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane3))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,9 +328,9 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11))
@@ -308,7 +338,7 @@ public class Main extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(startIndexTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(endIndexTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
                         .addComponent(jLabel3)
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -333,12 +363,10 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(minCGTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(optCGTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(maxCGTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addComponent(generatePrimersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))
+                        .addContainerGap(22, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(scrollPane)
-                        .addContainerGap())))
+                        .addGap(11, 11, 11)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -406,7 +434,6 @@ public class Main extends javax.swing.JFrame {
         int minSize = PrimerSetting.minSize;
         int maxSize = PrimerSetting.maxSize;
 
-        PrimerOutcome primer;
         double CGcount;
         int count = 0;
 
@@ -428,7 +455,7 @@ public class Main extends javax.swing.JFrame {
                 double tm = (4 * (gCount + cCount) + 2 * (aCount + tCount));
 
                 if (cgContent >= 0.2 && cgContent <= 0.6 && tm >= 57 && tm <= 63) {
-                    primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.FORWARD);
+                    PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.FORWARD);
                     forwardPrimers.add(primer);
                 }
             }
@@ -451,60 +478,52 @@ public class Main extends javax.swing.JFrame {
                 double tm = (4 * (gCount + cCount) + 2 * (aCount + tCount));
 
                 if (cgContent >= 0.2 && cgContent <= 0.6 && tm >= 57 && tm <= 63) {
-                    primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.REVERSE);
+                    PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.REVERSE);
                     reversePrimers.add(primer);
                 }
             }
         }
-        PrimerOutcome.sortCGForward(forwardPrimers);
-        PrimerOutcome.sortCGReverse(reversePrimers);
-
-//        PrimerOutcome.sortTmForward(forwardPrimers);
-//        PrimerOutcome.sortTmReverse(reversePrimers);
-//        PrimerOutcome.sortLengthForward(forwardPrimers);
-//        PrimerOutcome.sortLengthReverse(reversePrimers);
-//        PrimerOutcome.sortOptimalForward(forwardPrimers);
-//        PrimerOutcome.sortOptimalForward(reversePrimers);
-//        scrollPane.add(panel);
-        String output = "";
-        for (int i = 0; i < Math.min(forwardPrimers.size(), reversePrimers.size()); i++) {
-            output += "hahahaha" + i + "\n";
-
-            JScrollPane scrollPane = new JScrollPane(panel);
-
-            JLabel la = new JLabel("aagfawrg");
-
-            panel.add(la);
-
-            resultLabel.setText(resultLabel.getText() + "a");
-
-//            scrollPane.add(new JLabel("alkjlkjlkjlk"));
-            forwardPrimers.get(i).display(i);
-            reversePrimers.get(i).display(i);
+        if (optimalRadio.isSelected()) {
+            PrimerOutcome.sortOptimal(forwardPrimers);
+            PrimerOutcome.sortOptimal(reversePrimers);
         }
-//        JOptionPane jOptionPane = new JOptionPane();
-//        jOptionPane.setPreferredSize(new Dimension(500, 500));
-//        JOptionPane.showMessageDialog(new JOptionPane(), output, "output", JOptionPane.INFORMATION_MESSAGE);
+        else if (sizeRadio.isSelected()) {
+            PrimerOutcome.sortLength(forwardPrimers);
+            PrimerOutcome.sortLength(reversePrimers);
+        }
+        else if (tempRadio.isSelected()) {
+            PrimerOutcome.sortTm(forwardPrimers);
+            PrimerOutcome.sortTm(reversePrimers);
+        }
+        else if (cgRadio.isSelected()) {
+            PrimerOutcome.sortCG(forwardPrimers);
+            PrimerOutcome.sortCG(reversePrimers);
+        }
+        JTextArea textArea = new JTextArea();
 
-        JTextArea textArea = new JTextArea(output);
+        for (int i = 0; i < Math.min(forwardPrimers.size(), reversePrimers.size()); i++) {
+            textArea.append(forwardPrimers.get(i).display(i));
+            textArea.append(reversePrimers.get(i).display(i));
+        }
         JScrollPane scrollPane = new JScrollPane(textArea);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        scrollPane.setPreferredSize(new Dimension(500, 500));
-        JOptionPane.showMessageDialog(null, scrollPane, "dialog test with textarea",
-                JOptionPane.YES_NO_OPTION);
+        scrollPane.setPreferredSize(new Dimension(400, 500));
+        JOptionPane.showMessageDialog(null, scrollPane, "Primers", JOptionPane.PLAIN_MESSAGE);
 
-        panel.revalidate();
-        panel.repaint();
+        System.out.println("All primers: " + count);
+        System.out.println("Forwards: " + forwardPrimers.size());
+        System.out.println("Reverses: " + reversePrimers.size());
 
-        System.out.println(count);
-        System.out.println(forwardPrimers.size());
-        System.out.println(reversePrimers.size());
+        forwardPrimers.clear();
+        reversePrimers.clear();
     }//GEN-LAST:event_generatePrimersBtnActionPerformed
 
     private void startIndexTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startIndexTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_startIndexTxtActionPerformed
+
+    private void sizeRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sizeRadioActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -534,22 +553,6 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
-
-//                Main frame = new Main();
-//
-//                JPanel mainpanel = new JPanel();
-//                mainpanel.setLayout(new BoxLayout(mainpanel, BoxLayout.X_AXIS));
-//                frame.add(mainpanel);
-//
-//                JPanel rightpanel = new JPanel();
-//                rightpanel.setLayout(new FlowLayout());
-//                for (int i = 0; i < 100; i++) {
-//                    rightpanel.add(new JLabel("Label " + i));
-//                }
-//                mainpanel.add(new JLabel("Left label"));
-//                mainpanel.add(new JScrollPane(rightpanel));
-//                frame.setSize(500, 100);
-//                frame.setVisible(true);
             }
         });
     }
@@ -557,12 +560,15 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea DNAInputTxt;
     private javax.swing.JTextArea DNAOutputTxt;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton cgRadio;
     private javax.swing.JTextField endIndexTxt;
     private javax.swing.JButton enterBtn;
     private javax.swing.JButton generatePrimersBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -571,6 +577,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField maxCGTxt;
@@ -582,9 +589,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField optCGTxt;
     private javax.swing.JTextField optSizeTxt;
     private javax.swing.JTextField optTmTxt;
-    private javax.swing.JPanel panel;
-    private javax.swing.JLabel resultLabel;
-    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JRadioButton optimalRadio;
+    private javax.swing.JRadioButton sizeRadio;
     private javax.swing.JTextField startIndexTxt;
+    private javax.swing.JRadioButton tempRadio;
     // End of variables declaration//GEN-END:variables
 }
