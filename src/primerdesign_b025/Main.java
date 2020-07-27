@@ -34,19 +34,10 @@ public class Main extends javax.swing.JFrame {
         optCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.optimalCG)));
         maxCGTxt.setText(String.valueOf((int)Math.rint(PrimerSetting.maxCG)));
         
+        optSizeTxt.setEditable(false);
+        optTmTxt.setEditable(false);
+        
         optimalRadio.setSelected(true);
-
-//        JTabbedPane optimalTab = new JTabbedPane();
-//        
-//
-//        JScrollPane scrollPane = new JScrollPane();
-//        JLabel label = new JLabel("aa");
-//        scrollPane.add(label);
-//
-//        jTabbedPane1.addTab("Optimal", scrollPane);
-//        jTabbedPane1.addTab("Length", new JScrollPane());
-//        jTabbedPane1.addTab("Temperature", new JScrollPane());
-//        jTabbedPane1.addTab("CG Content", new JScrollPane());
     }
 
     @SuppressWarnings("unchecked")
@@ -420,25 +411,22 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void generatePrimersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePrimersBtnActionPerformed
-        PrimerSetting.minSize = Integer.parseInt(minSizeTxt.getText());
-        PrimerSetting.maxSize = Integer.parseInt(maxSizeTxt.getText());
-        PrimerSetting.minTemperature = Integer.parseInt(minTmTxt.getText());
-        PrimerSetting.maxTemperature = Integer.parseInt(maxTmTxt.getText());
-        PrimerSetting.minCG = Double.parseDouble(minCGTxt.getText());
-        PrimerSetting.optimalCG = Double.parseDouble(optCGTxt.getText());
-        PrimerSetting.maxCG = Double.parseDouble(maxCGTxt.getText());
+        PrimerSetting.minSize = Integer.parseInt(minSizeTxt.getText()) / 100;
+        PrimerSetting.maxSize = Integer.parseInt(maxSizeTxt.getText()) / 100;
+        PrimerSetting.minTemperature = Integer.parseInt(minTmTxt.getText()) / 100;
+        PrimerSetting.maxTemperature = Integer.parseInt(maxTmTxt.getText()) / 100;
+        PrimerSetting.minCG = Double.parseDouble(minCGTxt.getText()) / 100;
+        PrimerSetting.optimalCG = Double.parseDouble(optCGTxt.getText()) / 100;
+        PrimerSetting.maxCG = Double.parseDouble(maxCGTxt.getText()) / 100;
 
         dna.setStartIndex(Integer.parseInt(startIndexTxt.getText()));
         dna.setEndIndex(Integer.parseInt(endIndexTxt.getText()));
-
-        int minSize = PrimerSetting.minSize;
-        int maxSize = PrimerSetting.maxSize;
-
+        
         double CGcount;
         int count = 0;
-
-        for (int i = 0; i < dna.getStartIndex() - minSize; i++) {
-            for (int j = i + minSize - 1; j <= i + maxSize; j++) {
+//////////////////////////////////////////////////////////
+        for (int i = 0; i < dna.getStartIndex() - PrimerSetting.minSize; i++) {
+            for (int j = i + PrimerSetting.minSize - 1; j <= i + PrimerSetting.maxSize; j++) {
                 if (j > dna.getStartIndex()) {
                     break;
                 }
@@ -460,8 +448,8 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         }
-        for (int i = dna.getEndIndex(); i < DNAOutputTxt.getText().length() - minSize; i++) {
-            for (int j = i + minSize; j < i + maxSize + 1; j++) {
+        for (int i = dna.getEndIndex(); i < DNAOutputTxt.getText().length() - PrimerSetting.minSize; i++) {
+            for (int j = i + PrimerSetting.minSize; j < i + PrimerSetting.maxSize + 1; j++) {
                 if (j > DNAOutputTxt.getText().length()) {
                     break;
                 }
