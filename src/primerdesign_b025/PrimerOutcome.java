@@ -1,8 +1,6 @@
 package primerdesign_b025;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 
 enum PrimerType {
     FORWARD, REVERSE
@@ -75,13 +73,13 @@ public class PrimerOutcome {
         this.type = type;
     }
 
-    public String display(int i) {
-        String s = type.toString() + " PRIMER " + (int) (i + 1) + ":\n"
+    public String display(int primerIndex) {
+        String outputString = type.toString() + " PRIMER " + (int) (primerIndex + 1) + ":\n"
                 + sequence
                 + "\n\nStart index:  " + startIndex
                 + "\nLength:        " + (int) Math.rint(length) + " bp\n"
                 + "Tm:               " + (int) Math.rint(temperature) + " °C\n"
                 + "CG%:           " + df.format(CG * 100) + "%\n_____________\n";
-        return s;
+        return outputString;
     }
 }

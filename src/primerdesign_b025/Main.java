@@ -1,6 +1,7 @@
 package primerdesign_b025;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -21,7 +22,10 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        setFormInputs();
+    }
 
+    private void setFormInputs() {
         DNAInputTxt.setText("ATTACCTTTTTTAGGATCAGCCCTAACCCCTTCTTTCTAGTCCCCTTTTTCCTTTTTATTCAGGCTATCCCCTTTAAAATTTTCTGACCTCTTCTTTTATAATTTAAAATTCTAGTTCTAACAAAACCCCCTCCTTAATCCTTTTTTTAAATTTTTTTTTTCCTAATTTATTGATTTAGTGTTGTTTTTTTTTTTTTCCATGTTTCAATCTTTCCTCTGATCCTATTTTATAGCATGCACAAAACAAAAATTTAAAATCATCTTTTTCTTTTTTCCTTCCCCTTAGTTAGTGTGTCTGTATTTAAGAGAGATGACGCTCTCTCTATCAACCCTCCTCCCCCACTCTCTATCACCCCACCTATTACAGAAGTGTCGCCGTAAATATTTACTTCTAGTTTCTTGTGTTTAATAATTTATAAGATGGACCAAGTATTTAGGATTGGTTTACTGATGGTGTTATTTCATGGCTGATTATTTCAGTGAAGGAGTAGTGATGT");
 
         minSizeTxt.setText(String.valueOf(PrimerSetting.minSize));
@@ -38,6 +42,21 @@ public class Main extends javax.swing.JFrame {
         optTmTxt.setEditable(false);
 
         optimalRadio.setSelected(true);
+    }
+
+    public void setPrimerSettings() {
+        PrimerSetting.minSize = Integer.parseInt(minSizeTxt.getText());
+        PrimerSetting.maxSize = Integer.parseInt(maxSizeTxt.getText());
+        PrimerSetting.minTemperature = Integer.parseInt(minTmTxt.getText());
+        PrimerSetting.maxTemperature = Integer.parseInt(maxTmTxt.getText());
+        PrimerSetting.minCG = Double.parseDouble(minCGTxt.getText());
+        PrimerSetting.optimalCG = Double.parseDouble(optCGTxt.getText());
+        PrimerSetting.maxCG = Double.parseDouble(maxCGTxt.getText());
+    }
+
+    public void setDNAindices() {
+        dna.setStartIndex(Integer.parseInt(startIndexTxt.getText()));
+        dna.setEndIndex(Integer.parseInt(endIndexTxt.getText()));
     }
 
     @SuppressWarnings("unchecked")
@@ -224,7 +243,7 @@ public class Main extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel12)
                 .addGap(28, 28, 28)
                 .addComponent(optimalRadio)
@@ -249,57 +268,58 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel8))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(40, 40, 40)
-                                        .addComponent(jLabel3))
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(72, 72, 72)
+                                        .addComponent(jLabel4)
+                                        .addGap(24, 24, 24))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel5)
+                                                .addGap(90, 90, 90))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(minCGTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(22, 22, 22)
-                                                        .addComponent(optCGTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(minCGTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(optCGTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addComponent(minTmTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(minSizeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGap(22, 22, 22)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(optSizeTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(optTmTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                .addGap(28, 28, 28))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(54, 54, 54)
-                                                    .addComponent(jLabel4)
-                                                    .addGap(24, 24, 24))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addComponent(jLabel5)
-                                                    .addGap(90, 90, 90))))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(maxCGTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(maxSizeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(maxTmTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                            .addComponent(minSizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                                                            .addComponent(minTmTxt))
+                                                        .addGap(18, 18, 18)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(optSizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                                                            .addComponent(optTmTxt))))
+                                                .addGap(24, 24, 24)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(maxCGTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                        .addComponent(maxTmTxt)
+                                        .addComponent(maxSizeTxt, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(startIndexTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(endIndexTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(68, 68, 68)
+                                    .addComponent(endIndexTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)))
+                        .addGap(60, 60, 60)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(enterBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1)
@@ -411,73 +431,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void generatePrimersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePrimersBtnActionPerformed
-        PrimerSetting.minSize = Integer.parseInt(minSizeTxt.getText());
-        PrimerSetting.maxSize = Integer.parseInt(maxSizeTxt.getText());
-        PrimerSetting.minTemperature = Integer.parseInt(minTmTxt.getText());
-        PrimerSetting.maxTemperature = Integer.parseInt(maxTmTxt.getText());
-        PrimerSetting.minCG = Double.parseDouble(minCGTxt.getText());
-        PrimerSetting.optimalCG = Double.parseDouble(optCGTxt.getText());
-        PrimerSetting.maxCG = Double.parseDouble(maxCGTxt.getText());
+        setPrimerSettings();
+        setDNAindices();
 
-        dna.setStartIndex(Integer.parseInt(startIndexTxt.getText()));
-        dna.setEndIndex(Integer.parseInt(endIndexTxt.getText()));
+        PrimerData.generateForwardPrimers(dna, forwardPrimers);
+        PrimerData.generateReversePrimers(dna, reversePrimers);
 
-        int minSize = PrimerSetting.minSize;
-        int maxSize = PrimerSetting.maxSize;
-
-        double CGcount;
-        int count = 0;
-
-        for (int i = 0; i < dna.getStartIndex() - minSize; i++) {
-            for (int j = i + minSize - 1; j <= i + maxSize; j++) {
-                if (j > dna.getStartIndex()) {
-                    break;
-                }
-                count++;
-
-                String primerSequence = DNAOutputTxt.getText().substring(i, j);
-                int primerLength = primerSequence.length();
-                double cCount = primerLength - primerSequence.replace("C", "").length();
-                double gCount = primerLength - primerSequence.replace("G", "").length();
-                double aCount = primerLength - primerSequence.replace("A", "").length();
-                double tCount = primerLength - primerSequence.replace("T", "").length();
-                CGcount = cCount + gCount;
-                double cgContent = CGcount / primerLength;
-                double tm = (4 * (gCount + cCount) + 2 * (aCount + tCount));
-
-                if (cgContent >= (PrimerSetting.minCG / 100) && cgContent <= (PrimerSetting.maxCG / 100)
-                        && tm >= PrimerSetting.minTemperature && tm <= PrimerSetting.maxTemperature) {
-                    PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.FORWARD);
-//                    System.out.println("size:" + primerLength);
-                    forwardPrimers.add(primer);
-                }
-            }
-        }
-        for (int i = dna.getEndIndex(); i < DNAOutputTxt.getText().length() - minSize; i++) {
-            for (int j = i + minSize; j < i + maxSize + 1; j++) {
-                if (j > DNAOutputTxt.getText().length()) {
-                    break;
-                }
-                count++;
-
-                String primerSequence = DNAOutputTxt.getText().substring(i, j);
-                int primerLength = primerSequence.length();
-                double cCount = primerLength - primerSequence.replace("C", "").length();
-                double gCount = primerLength - primerSequence.replace("G", "").length();
-                double aCount = primerLength - primerSequence.replace("A", "").length();
-                double tCount = primerLength - primerSequence.replace("T", "").length();
-                CGcount = cCount + gCount;
-                double cgContent = CGcount / primerLength;
-                double tm = (4 * (gCount + cCount) + 2 * (aCount + tCount));
-                
-                if (cgContent >= (PrimerSetting.minCG / 100) && cgContent <= (PrimerSetting.maxCG / 100)
-                        && tm >= PrimerSetting.minTemperature && tm <= PrimerSetting.maxTemperature) {
-                    PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.REVERSE);
-//                    System.out.println("size:" + primerLength);
-                    reversePrimers.add(primer);
-                }
-            }
-        }
         if (optimalRadio.isSelected()) {
             PrimerData.sortOptimal(forwardPrimers);
             PrimerData.sortOptimal(reversePrimers);
@@ -500,10 +459,11 @@ public class Main extends javax.swing.JFrame {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(400, 500));
         JOptionPane.showMessageDialog(null, scrollPane, "Primers", JOptionPane.PLAIN_MESSAGE);
-
-        System.out.println("All primers: " + count);
-        System.out.println("Forwards: " + forwardPrimers.size());
-        System.out.println("Reverses: " + reversePrimers.size());
+        scrollPane.getVerticalScrollBar().setValue(0);
+        scrollPane.repaint();
+        
+        System.out.println("Forward primers: " + forwardPrimers.size());
+        System.out.println("Reverse primers: " + reversePrimers.size());
 
         forwardPrimers.clear();
         reversePrimers.clear();
@@ -543,6 +503,7 @@ public class Main extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Main().setVisible(true);
             }
