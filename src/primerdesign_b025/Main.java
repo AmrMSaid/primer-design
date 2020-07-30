@@ -1,7 +1,6 @@
 package primerdesign_b025;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -26,8 +25,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void setFormInputs() {
-        DNAInputTxt.setText("ATTACCTTTTTTAGGATCAGCCCTAACCCCTTCTTTCTAGTCCCCTTTTTCCTTTTTATTCAGGCTATCCCCTTTAAAATTTTCTGACCTCTTCTTTTATAATTTAAAATTCTAGTTCTAACAAAACCCCCTCCTTAATCCTTTTTTTAAATTTTTTTTTTCCTAATTTATTGATTTAGTGTTGTTTTTTTTTTTTTCCATGTTTCAATCTTTCCTCTGATCCTATTTTATAGCATGCACAAAACAAAAATTTAAAATCATCTTTTTCTTTTTTCCTTCCCCTTAGTTAGTGTGTCTGTATTTAAGAGAGATGACGCTCTCTCTATCAACCCTCCTCCCCCACTCTCTATCACCCCACCTATTACAGAAGTGTCGCCGTAAATATTTACTTCTAGTTTCTTGTGTTTAATAATTTATAAGATGGACCAAGTATTTAGGATTGGTTTACTGATGGTGTTATTTCATGGCTGATTATTTCAGTGAAGGAGTAGTGATGT");
-
         minSizeTxt.setText(String.valueOf(PrimerSetting.minSize));
         optSizeTxt.setText(String.valueOf(PrimerSetting.OPTIMAL_SIZE));
         maxSizeTxt.setText(String.valueOf(PrimerSetting.maxSize));
@@ -44,6 +41,20 @@ public class Main extends javax.swing.JFrame {
         optimalRadio.setSelected(true);
     }
 
+    public void prepareDNA() throws CustomException {
+        if (DNAInputTxt.getText().isEmpty()) {
+            throw new CustomException("Enter a sequence of DNA or RNA.");
+        }
+        if (DNAInputTxt.getText().indexOf('U') != -1) {
+            RNA rna = new RNA(DNAInputTxt.getText());
+            dna = rna.convertToDNA();
+            DNAOutputTxt.setText(dna.getSequence());
+        } else {
+            dna = new DNA(DNAInputTxt.getText());
+            DNAOutputTxt.setText(dna.getSequence());
+        }
+    }
+
     public void setPrimerSettings() {
         PrimerSetting.minSize = Integer.parseInt(minSizeTxt.getText());
         PrimerSetting.maxSize = Integer.parseInt(maxSizeTxt.getText());
@@ -54,7 +65,20 @@ public class Main extends javax.swing.JFrame {
         PrimerSetting.maxCG = Double.parseDouble(maxCGTxt.getText());
     }
 
-    public void setDNAindices() {
+    public void setDNAindices() throws CustomException {
+        if (startIndexTxt.getText().isEmpty() || endIndexTxt.getText().isEmpty()) {
+            throw new CustomException("Enter start index and end index of the gene.");
+        }
+        boolean isNumeric = true;
+        try {
+            Double.parseDouble(startIndexTxt.getText());
+            Double.parseDouble(endIndexTxt.getText());
+        } catch (NumberFormatException e) {
+            isNumeric = false;
+        }
+        if (!isNumeric) {
+            throw new CustomException("Enter start index and end index of the gene as numbers.");
+        }
         dna.setStartIndex(Integer.parseInt(startIndexTxt.getText()));
         dna.setEndIndex(Integer.parseInt(endIndexTxt.getText()));
     }
@@ -420,23 +444,36 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_optSizeTxtActionPerformed
 
     private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
-        if (DNAInputTxt.getText().indexOf('U') != -1) {
-            RNA rna = new RNA(DNAInputTxt.getText());
-            dna = rna.convertToDNA();
-            DNAOutputTxt.setText(dna.getSequence());
-        } else {
-            dna = new DNA(DNAInputTxt.getText());
-            DNAOutputTxt.setText(dna.getSequence());
+        try {
+            prepareDNA();
+        } catch (CustomException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Caution", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void generatePrimersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePrimersBtnActionPerformed
-        setPrimerSettings();
-        setDNAindices();
+        try {
+            setPrimerSettings();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Enter primer settings as numbers.", "Caution", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        forwardPrimers.clear();
+        reversePrimers.clear();
 
-        PrimerData.generateForwardPrimers(dna, forwardPrimers);
-        PrimerData.generateReversePrimers(dna, reversePrimers);
-
+        try {
+            setDNAindices();
+        } catch (CustomException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Caution", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            PrimerData.generateForwardPrimers(dna, forwardPrimers);
+            PrimerData.generateReversePrimers(dna, reversePrimers);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Enter valid start and end indices.", "Caution", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if (optimalRadio.isSelected()) {
             PrimerData.sortOptimal(forwardPrimers);
             PrimerData.sortOptimal(reversePrimers);
@@ -453,20 +490,17 @@ public class Main extends javax.swing.JFrame {
         JTextArea textArea = new JTextArea();
 
         for (int i = 0; i < Math.min(forwardPrimers.size(), reversePrimers.size()); i++) {
-            textArea.append(forwardPrimers.get(i).display(i));
-            textArea.append(reversePrimers.get(i).display(i));
+            textArea.append(forwardPrimers.get(i).toString(i));
+            textArea.append(reversePrimers.get(i).toString(i));
         }
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(400, 500));
         JOptionPane.showMessageDialog(null, scrollPane, "Primers", JOptionPane.PLAIN_MESSAGE);
         scrollPane.getVerticalScrollBar().setValue(0);
         scrollPane.repaint();
-        
+
         System.out.println("Forward primers: " + forwardPrimers.size());
         System.out.println("Reverse primers: " + reversePrimers.size());
-
-        forwardPrimers.clear();
-        reversePrimers.clear();
     }//GEN-LAST:event_generatePrimersBtnActionPerformed
 
     private void startIndexTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startIndexTxtActionPerformed
@@ -501,7 +535,7 @@ public class Main extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and toString the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -547,4 +581,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField startIndexTxt;
     private javax.swing.JRadioButton tempRadio;
     // End of variables declaration//GEN-END:variables
+}
+
+class CustomException extends Exception {
+
+    public CustomException(String errorMessage) {
+        super(errorMessage);
+    }
 }

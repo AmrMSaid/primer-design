@@ -29,7 +29,7 @@ public class PrimerData {
 
                 if (cgContent >= (PrimerSetting.minCG / 100) && cgContent <= (PrimerSetting.maxCG / 100)
                         && tm >= PrimerSetting.minTemperature && tm <= PrimerSetting.maxTemperature) {
-                    PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.FORWARD);
+                    PrimerOutcome primer = new ForwardPrimer(primerSequence, i, primerLength, tm, cgContent);
                     forwardPrimers.add(primer);
                 }
             }
@@ -55,7 +55,7 @@ public class PrimerData {
 
                 if (cgContent >= (PrimerSetting.minCG / 100) && cgContent <= (PrimerSetting.maxCG / 100)
                         && tm >= PrimerSetting.minTemperature && tm <= PrimerSetting.maxTemperature) {
-                    PrimerOutcome primer = new PrimerOutcome(primerSequence, i, primerLength, tm, cgContent, PrimerType.REVERSE);
+                    PrimerOutcome primer = new ReversePrimer(primerSequence, i, primerLength, tm, cgContent);
                     reversePrimers.add(primer);
                 }
             }

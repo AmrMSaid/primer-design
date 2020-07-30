@@ -1,5 +1,6 @@
 package primerdesign_b025;
 
+//Inheritance
 public class DNA extends NucleicAcid {
 
     private int startIndex;

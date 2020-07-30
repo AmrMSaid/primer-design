@@ -2,29 +2,25 @@ package primerdesign_b025;
 
 import java.text.DecimalFormat;
 
-enum PrimerType {
-    FORWARD, REVERSE
-}
-
-public class PrimerOutcome {
+//Abstraction
+public abstract class PrimerOutcome {
 
     private String sequence;
     private int startIndex;
     private int length;
     private double temperature;
     private double CG;
-    private PrimerType type;
     private final DecimalFormat df = new DecimalFormat("##.##");
 
-    public PrimerOutcome(String sequence, int startIndex, int length, double temperature, double CG, PrimerType type) {
+    public PrimerOutcome(String sequence, int startIndex, int length, double temperature, double CG) {
         this.sequence = sequence;
         this.startIndex = startIndex;
         this.length = length;
         this.temperature = temperature;
         this.CG = CG;
-        this.type = type;
     }
 
+    //Encapsulation
     public String getSequence() {
         return sequence;
     }
@@ -65,21 +61,41 @@ public class PrimerOutcome {
         this.CG = CG;
     }
 
-    public PrimerType getType() {
-        return type;
-    }
-
-    public void setType(PrimerType type) {
-        this.type = type;
-    }
-
-    public String display(int primerIndex) {
-        String outputString = type.toString() + " PRIMER " + (int) (primerIndex + 1) + ":\n"
+    public String toString(int primerIndex) {
+        String outputString = " Primer " + (int) (primerIndex + 1) + ":\n"
                 + sequence
                 + "\n\nStart index:  " + startIndex
                 + "\nLength:        " + (int) Math.rint(length) + " bp\n"
                 + "Tm:               " + (int) Math.rint(temperature) + " °C\n"
                 + "CG%:           " + df.format(CG * 100) + "%\n_____________\n";
+        return outputString;
+    }
+}
+
+class ForwardPrimer extends PrimerOutcome {
+
+    public ForwardPrimer(String sequence, int startIndex, int length, double temperature, double CG) {
+        super(sequence, startIndex, length, temperature, CG);
+    }
+
+    //Polymorphism
+    @Override
+    public String toString(int primerIndex) {
+        String outputString = "Forward" + super.toString(primerIndex);
+        return outputString;
+    }
+}
+
+class ReversePrimer extends PrimerOutcome {
+
+    public ReversePrimer(String sequence, int startIndex, int length, double temperature, double CG) {
+        super(sequence, startIndex, length, temperature, CG);
+    }
+
+    //Polymorphism
+    @Override
+    public String toString(int primerIndex) {
+        String outputString = "Reverse" + super.toString(primerIndex);
         return outputString;
     }
 }

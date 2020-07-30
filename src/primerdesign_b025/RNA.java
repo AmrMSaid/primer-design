@@ -1,5 +1,6 @@
 package primerdesign_b025;
 
+//Inheritance
 public class RNA extends NucleicAcid {
 
     public RNA(String secuence) {

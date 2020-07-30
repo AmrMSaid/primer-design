@@ -1,5 +1,6 @@
 package primerdesign_b025;
 
+//Abstraction
 public abstract class NucleicAcid {
 
     private String sequence;
@@ -8,6 +9,7 @@ public abstract class NucleicAcid {
         this.sequence = secuence;
     }
 
+    
     public String getSequence() {
         return sequence;
     }
