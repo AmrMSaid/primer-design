@@ -33,7 +33,8 @@ public class PrimerData {
                     forwardPrimers.add(primer);
                 }
             }
-        }System.out.println("All forwards: " + count);
+        }
+        System.out.println("All forwards: " + count);
     }
 
     public static void generateReversePrimers(DNA dna, ArrayList<PrimerOutcome> reversePrimers) {
@@ -59,7 +60,8 @@ public class PrimerData {
                     reversePrimers.add(primer);
                 }
             }
-        }System.out.println("All reverses: " + count);
+        }
+        System.out.println("All reverses: " + count);
     }
 
     public static void sortOptimal(ArrayList<PrimerOutcome> primerOutcomes) {
@@ -74,6 +76,7 @@ public class PrimerData {
         }
     }
 
+    //Bubble sort
     public static void sortLength(ArrayList<PrimerOutcome> primerOutcomes) {
         for (int i = 0; i < primerOutcomes.size() - 1; i++) {
             for (int j = 0; j < primerOutcomes.size() - i - 1; j++) {

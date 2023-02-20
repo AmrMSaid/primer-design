@@ -5,7 +5,7 @@ public class DNA extends NucleicAcid {
 
     private int startIndex;
     private int endIndex;
-    
+
     public DNA(String secuence) {
         super(secuence);
     }

@@ -72,6 +72,7 @@ public abstract class PrimerOutcome {
     }
 }
 
+//Inheritance
 class ForwardPrimer extends PrimerOutcome {
 
     public ForwardPrimer(String sequence, int startIndex, int length, double temperature, double CG) {
@@ -86,6 +87,7 @@ class ForwardPrimer extends PrimerOutcome {
     }
 }
 
+//Inheritance
 class ReversePrimer extends PrimerOutcome {
 
     public ReversePrimer(String sequence, int startIndex, int length, double temperature, double CG) {

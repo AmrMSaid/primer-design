@@ -9,7 +9,7 @@ public abstract class NucleicAcid {
         this.sequence = secuence;
     }
 
-    
+    //Encapsulation
     public String getSequence() {
         return sequence;
     }
